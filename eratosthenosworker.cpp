@@ -44,44 +44,63 @@ QString* EratosthenosWorker::doEratosthenos(long int end_number)
         }
     }
 }
-    unsigned long long p = 2;
-    int integer = 0;
-    double per = 0.0;
-    long int end_number = 5000000;
-    QString result = "";
+
+
+
+
+
+long int end_number = 199968;
+
 
 void EratosthenosWorker::run() {
 
-
-
+    unsigned long long p = 2;
+     double per = 0.0;
+      int integer = 2;
+    QString result = "";
     std::vector<bool> numbers (end_number, true);
-
 
 
     while (p < end_number)
     {
         if(canRun)
         {
-             qDebug() << p;
+
+             //qDebug() << p;
             integer++;
-            if ( ! numbers[p])
+            //qDebug() << integer;
+
+
+
+            if (!numbers[p])
             {
+                if(p == (end_number)) //ROZJEBANE , NEDOJDE TAM :(
+                {
+                    qDebug() << "emit2";
+                    qDebug() << (result);
+                    //emit resultReady(result);
+                    result = "";
+                }
                 p++;
+
                 continue;
             }
 
 
-            qDebug() << integer;
+
 
             result += QString::number(p) + ", ";
 
-            per = (double) p / (double) end_number * 100;
+            per = (double) integer / (double) end_number * 100;
 
-            emit progressUp((int)per);
+            //emit progressUp((int)per);
+            //qDebug() << (int)per;
             if(integer % 1000 == 0) // a co posledni beh? to asi neemitne...
             {
+
                 qDebug() << "emit";
-                emit resultReady(result);
+                //emit resultReady(result);
+                qDebug() << (result);
                 result = "";
             }
 
@@ -94,12 +113,15 @@ void EratosthenosWorker::run() {
 
             for (unsigned long long i = p * p; i <= end_number; i += p)
             {
+                //qDebug() << "for:" + QString::number(i);
                 numbers[i] = false;
             }
 
+            p++;
 
         }
     }
+
 }
 
 
