@@ -45,40 +45,28 @@ QString* EratosthenosWorker::doEratosthenos(long int end_number)
     }
 }
 
-
-
-
-
-long int end_number = 199968;
-
+long int end_number = 234567;
 
 void EratosthenosWorker::run() {
 
     unsigned long long p = 2;
-     double per = 0.0;
-      int integer = 2;
+    double per = 0.0;
     QString result = "";
-    std::vector<bool> numbers (end_number, true);
+    std::vector<bool> numbers (end_number + 1, true);
 
-
-    while (p < end_number)
+    while (p <= end_number)
     {
+        if(p == 200000)
+        {
+            int flakac = 0;
+        }
         if(canRun)
         {
-
-             //qDebug() << p;
-            integer++;
-            //qDebug() << integer;
-
-
-
             if (!numbers[p])
             {
-                if(p == (end_number)) //ROZJEBANE , NEDOJDE TAM :(
-                {
-                    qDebug() << "emit2";
-                    qDebug() << (result);
-                    //emit resultReady(result);
+                if(p == end_number || p % 1000 == 0)
+                { 
+                    emit resultReady(result);
                     result = "";
                 }
                 p++;
@@ -86,24 +74,17 @@ void EratosthenosWorker::run() {
                 continue;
             }
 
-
-
-
             result += QString::number(p) + ", ";
 
-            per = (double) integer / (double) end_number * 100;
+            per = (double) p / (double) end_number * 100;
 
-            //emit progressUp((int)per);
-            //qDebug() << (int)per;
-            if(integer % 1000 == 0) // a co posledni beh? to asi neemitne...
+            emit progressUp((int)per);
+
+            if(p == end_number)
             {
-
-                qDebug() << "emit";
-                //emit resultReady(result);
-                qDebug() << (result);
+                emit resultReady(result);
                 result = "";
             }
-
 
             if (p * p >= end_number)
             {
@@ -113,15 +94,12 @@ void EratosthenosWorker::run() {
 
             for (unsigned long long i = p * p; i <= end_number; i += p)
             {
-                //qDebug() << "for:" + QString::number(i);
                 numbers[i] = false;
             }
 
             p++;
-
         }
     }
-
 }
 
 
