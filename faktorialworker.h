@@ -19,7 +19,7 @@ protected:
     void run() override;
 
 signals:
-    void resultReady(QString result);
+    void resultReady();
     void progressUp(int percentage);
 
 

@@ -16,7 +16,7 @@ public:
 protected:
       void run();
 signals:
-    void resultReady(QString result);
+    void resultReady();
     void progressUp(int percentage);
 
 public slots:

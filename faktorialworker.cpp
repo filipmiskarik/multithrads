@@ -2,6 +2,7 @@
 
 #include <QThread>
 #include <QDebug>
+#include <QFile>
 #include <bits/stdc++.h>
 
 #define MAX 400000
@@ -74,7 +75,7 @@ QString* FaktorialWorker::doFactorial(long int n)
         }
 
         pos -= 100000;
-        emit resultReady(resultFinal);
+        emit resultReady();
     }
 }
 
@@ -82,62 +83,71 @@ void FaktorialWorker::run() {
 
     int count = 0;
 
-      //if(canRun)
-      //{
+    //if(canRun)
+    //{
 
-          count ++;
-         qDebug() << "FUNGUJU FACTORIAL!!!!";
-         qDebug() << "F" + QString::number(count);
+    count ++;
+    qDebug() << "FUNGUJU FACTORIAL!!!!";
+    qDebug() << "F" + QString::number(count);
 
-         long int n = 54000;
+    long int n = 54000;
 
-         int res[MAX];
-         QString resultFinal = "";
+    int res[MAX];
+    QString resultFinal = "";
 
-         // Initialize result
-         res[0] = 1;
-         int res_size = 1;
+    // Initialize result
+    res[0] = 1;
+    int res_size = 1;
 
-         int x = 2;
-         while(x <= n)
-         {
-             double per = 0.0;
-             if(canRun)
-             {
-             res_size = multiply(x, res, res_size);
-             per = (double) x / (double) n * 100.0;
-             emit progressUp((int)per);
-             x++;
-          }
-         }
+    int x = 2;
+    while(x <= n)
+    {
+        double per = 0.0;
+        if(canRun)
+        {
+            res_size = multiply(x, res, res_size);
+            per = (double) x / (double) n * 100.0;
+            emit progressUp((int)per);
+            x++;
+        }
+    }
 
-         int pos = res_size - 1;
 
-             for(int j = (res_size - 1); j >= 0; j -= 10000)
-             {
-                 if(canRun)
-                 {
-                 resultFinal = "";
-                 int lastpos = pos - 10000;
-                 if(lastpos < 0)
-                 {
-                     lastpos = 0;
-                 }
-                 if(pos == res_size - 1)
-                 {
-                     lastpos++;
-                 }
-                 for (int i = pos; i >= lastpos; i--)
-                 {
-                     resultFinal += QString::number(res[i]);
-                 }
 
-                 pos -= 10000;
-                 emit resultReady(resultFinal);
-              }
-          }
-      //}
 
+    int pos = res_size - 1;
+
+    for(int j = (res_size - 1); j >= 0; j -= 10000)
+    {
+        if(canRun)
+        {
+            int lastpos = pos - 10000;
+            if(lastpos < 0)
+            {
+                lastpos = 0;
+            }
+            if(pos == res_size - 1)
+            {
+                lastpos++;
+            }
+            for (int i = pos; i >= lastpos; i--)
+            {
+                resultFinal += QString::number(res[i]);
+            }
+
+            pos -= 10000;
+            emit resultReady();
+        }
+    }
+
+    const QString qPath("fact.txt");
+    QFile qFile(qPath);
+    if (qFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&qFile); out << resultFinal;
+        qFile.close();
+        emit resultReady();
+    }
 }
 
 void FaktorialWorker::pauseThread() {

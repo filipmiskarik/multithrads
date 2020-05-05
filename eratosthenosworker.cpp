@@ -1,6 +1,8 @@
 #include "eratosthenosworker.h"
 #include <QDebug>
+#include <QFile>
 
+#define MAX 400000
 
 EratosthenosWorker::EratosthenosWorker()
 {
@@ -30,7 +32,7 @@ QString* EratosthenosWorker::doEratosthenos(long int end_number)
         emit progressUp((int)per);
         if(integer % 1000 == 0) // a co posledni beh? to asi neemitne...
         {
-            emit resultReady(result);
+            emit resultReady();
             result = "";
         }
 
@@ -45,7 +47,7 @@ QString* EratosthenosWorker::doEratosthenos(long int end_number)
     }
 }
 
-long int end_number = 234567;
+long int end_number = 15234567;
 
 void EratosthenosWorker::run() {
 
@@ -56,19 +58,10 @@ void EratosthenosWorker::run() {
 
     while (p <= end_number)
     {
-        if(p == 200000)
-        {
-            int flakac = 0;
-        }
         if(canRun)
         {
             if (!numbers[p])
             {
-                if(p == end_number || p % 1000 == 0)
-                { 
-                    emit resultReady(result);
-                    result = "";
-                }
                 p++;
 
                 continue;
@@ -77,14 +70,7 @@ void EratosthenosWorker::run() {
             result += QString::number(p) + ", ";
 
             per = (double) p / (double) end_number * 100;
-
             emit progressUp((int)per);
-
-            if(p == end_number)
-            {
-                emit resultReady(result);
-                result = "";
-            }
 
             if (p * p >= end_number)
             {
@@ -100,6 +86,17 @@ void EratosthenosWorker::run() {
             p++;
         }
     }
+
+    const QString qPath("eratos.txt");
+    QFile qFile(qPath);
+    if (qFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream out(&qFile); out << result;
+        qFile.close();
+        emit resultReady();
+    }
+
+    qDebug() << "koncim";
 }
 
 
@@ -112,29 +109,3 @@ void EratosthenosWorker::unPauseThread() {
     qDebug() << "ODPAUZOVAL JSEM ERATOSE";
     canRun = true;
 }
-
-
-
-
-
-
-//for(int j = (res_size - 1); j >= 0; j -= 1000)
-//{
-//    resultFinal = "";
-//    int lastpos = pos - 1000;
-//    if(lastpos < 0)
-//    {
-//        lastpos = 0;
-//    }
-//    if(pos == res_size - 1)
-//    {
-//        lastpos++;
-//    }
-//    for (int i = pos; i >= lastpos; i--)
-//    {
-//        resultFinal += QString::number(res[i]);
-//    }
-
-//    pos -= 1000;
-//    emit resultReady(resultFinal);
-//}
