@@ -8,6 +8,7 @@
 #include <iostream>
 #include <QTimer>
 #include <QUrl>
+#include <QIntValidator>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -53,6 +54,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->pushButtonEratos->setEnabled(false);
     ui->pushButtonFact->setEnabled(false);
+    ui->lineEditFact->setValidator(new QIntValidator);
+    ui->lineEditEratos->setValidator(new QIntValidator);
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +70,7 @@ MainWindow::~MainWindow()
 void MainWindow::handleResults()
 {
     ui->pushButtonFact->setEnabled(true);
-    ui->faktorialProgresBar->setValue(100);
+//    ui->faktorialProgresBar->setValue(100);
 }
 void::MainWindow::handleProgress(int percentage)
 {
@@ -77,7 +80,7 @@ void::MainWindow::handleProgress(int percentage)
 void MainWindow::handleEratosResults()
 {
     ui->pushButtonEratos->setEnabled(true);
-    ui->EratosProgresBar->setValue(100);
+//    ui->EratosProgresBar->setValue(100);
 }
 
 void::MainWindow::handleEratosProgress(int percentage)
@@ -87,10 +90,11 @@ void::MainWindow::handleEratosProgress(int percentage)
 
 void MainWindow::startEratostenos()
 {
+    QString input = ui->lineEditEratos->text();
     ui->pushButtonEratos->setEnabled(false);
     ui->EratosProgresBar->setValue(0);
     EratosWorker->start();
-    MainWindow::eratosResumeSignal();
+    MainWindow::eratosResumeSignal(input.toLongLong());
 }
 
 void MainWindow::startFaktorial()
@@ -99,7 +103,8 @@ void MainWindow::startFaktorial()
     ui->pushButtonFact->setEnabled(false);
     ui->faktorialProgresBar->setValue(0);
     worker->start();
-    MainWindow::factoriaResumeSignal();
+
+    MainWindow::factoriaResumeSignal(input.toLongLong());
 }
 
 void MainWindow::pauseFactorial()
@@ -109,7 +114,8 @@ void MainWindow::pauseFactorial()
 
 void MainWindow::resumeFactorial()
 {
-    MainWindow::factoriaResumeSignal();
+    QString input = ui->lineEditFact->text();
+    MainWindow::factoriaResumeSignal(input.toLongLong());
 }
 
 void MainWindow::pauseEratos()
@@ -119,7 +125,8 @@ void MainWindow::pauseEratos()
 
 void MainWindow::resumeEratos()
 {
-    MainWindow::eratosResumeSignal();
+    QString input = ui->lineEditEratos->text();
+    MainWindow::eratosResumeSignal(input.toLongLong());
 }
 
 void MainWindow::stopFact()

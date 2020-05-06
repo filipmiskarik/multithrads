@@ -23,7 +23,7 @@ signals:
 
 public slots:
     void pauseThread();
-    void unPauseThread();
+    void unPauseThread(long long input);
 };
 
 #endif // ERATOSTHENOSWORKER_H

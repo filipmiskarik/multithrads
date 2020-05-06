@@ -32,10 +32,10 @@ signals:
      void operateEratos(long int timeout);
 
      void factoriaPauseSignal();
-     void factoriaResumeSignal();
+     void factoriaResumeSignal(long long input);
 
      void eratosPauseSignal();
-     void eratosResumeSignal();
+     void eratosResumeSignal(long long input);
 
 public slots:
      void handleResults();

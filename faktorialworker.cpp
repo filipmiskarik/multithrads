@@ -34,15 +34,13 @@ int FaktorialWorker::multiply(int x, int res[], int res_size)
     return res_size;
 }
 
+long int n = 54000;
+
 void FaktorialWorker::run() {
     QFile::remove("fact.txt");
     int count = 0;
 
     count ++;
-    qDebug() << "FUNGUJU FACTORIAL!!!!";
-    qDebug() << "F" + QString::number(count);
-
-    long int n = 54000;
 
     int res[MAX];
     QString resultFinal = "";
@@ -62,48 +60,31 @@ void FaktorialWorker::run() {
             x++;
         }
     }
-    int pos = res_size - 1;
 
-    for(int j = (res_size - 1); j >= 0; j -= 10000)
+    for(int i = res_size - 1; i >= 0; i--)
     {
-        if(canRun)
-        {
-            int lastpos = pos - 10000;
-            if(lastpos < 0)
-            {
-                lastpos = 0;
-            }
-            if(pos == res_size - 1)
-            {
-                lastpos++;
-            }
-            for (int i = pos; i >= lastpos; i--)
-            {
-                resultFinal += QString::number(res[i]);
-            }
-
-            pos -= 10000;
-            emit resultReady();
-        }
+        resultFinal += QString::number(res[i]);
     }
 
     const QString qPath("fact.txt");
     QFile qFile(qPath);
     if (qFile.open(QIODevice::WriteOnly))
     {
-        QTextStream out(&qFile); out << resultFinal;
+        QTextStream out(&qFile);
+        out << resultFinal;
         qFile.close();
         emit resultReady();
     }
 }
 
-void FaktorialWorker::pauseThread() {
-    qDebug() << "ZAPAUZOVAL JSEM FACTORAL";
+void FaktorialWorker::pauseThread()
+{
     canRun = false;
 }
 
-void FaktorialWorker::unPauseThread() {
-    qDebug() << "ODPAUZOVAL JSEM FACTORIAL";
+void FaktorialWorker::unPauseThread(long long input)
+{
+    n = input;
     canRun = true;
 }
 

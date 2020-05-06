@@ -11,7 +11,8 @@ EratosthenosWorker::EratosthenosWorker()
 
 long int end_number = 12345627;
 
-void EratosthenosWorker::run() {
+void EratosthenosWorker::run()
+{
     QFile::remove("eratos.txt");
     unsigned long long p = 2;
     double per = 0.0;
@@ -22,17 +23,16 @@ void EratosthenosWorker::run() {
     {
         if(canRun)
         {
+            per = (double) p / (double) end_number * 100;
+            emit progressUp(qRound(per));
+
             if (!numbers[p])
             {
                 p++;
-
                 continue;
             }
 
             result += QString::number(p) + ", ";
-
-            per = (double) p / (double) end_number * 100;
-            emit progressUp((int)per);
 
             if (p * p >= end_number)
             {
@@ -57,17 +57,16 @@ void EratosthenosWorker::run() {
         qFile.close();
         emit resultReady();
     }
-
-    qDebug() << "koncim";
 }
 
 
-void EratosthenosWorker::pauseThread() {
-    qDebug() << "ZAPAUZOVAL JSEM ERATOSE";
+void EratosthenosWorker::pauseThread()
+{
     canRun = false;
 }
 
-void EratosthenosWorker::unPauseThread() {
-    qDebug() << "ODPAUZOVAL JSEM ERATOSE";
+void EratosthenosWorker::unPauseThread(long long input)
+{
+    end_number = input;
     canRun = true;
 }
