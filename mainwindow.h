@@ -15,10 +15,10 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-QThread workerThread;
-QThread eratosWorkerThread;
-FaktorialWorker *worker = new FaktorialWorker;
-EratosthenosWorker *EratosWorker = new EratosthenosWorker;
+    QThread workerThread;
+    QThread eratosWorkerThread;
+    FaktorialWorker *worker = new FaktorialWorker;
+    EratosthenosWorker *EratosWorker = new EratosthenosWorker;
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

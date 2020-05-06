@@ -6,51 +6,13 @@
 
 EratosthenosWorker::EratosthenosWorker()
 {
-    canRun = false;
+    canRun = true;
 }
 
-QString* EratosthenosWorker::doEratosthenos(long int end_number)
-{
-    QString result = "";
-
-    std::vector<bool> numbers (end_number, true);
-    int integer = 0;
-    double per = 0.0;
-
-    for (unsigned long long p = 2; p < end_number; p++)
-    {
-        integer++;
-        if ( ! numbers[p])
-            continue;
-
-        qDebug() << integer;
-
-        result += QString::number(p) + ", ";
-
-        per = (double) p / (double) end_number * 100;
-
-        emit progressUp((int)per);
-        if(integer % 1000 == 0) // a co posledni beh? to asi neemitne...
-        {
-            emit resultReady();
-            result = "";
-        }
-
-
-        if (p * p >= end_number)
-            continue;
-
-        for (unsigned long long i = p * p; i <= end_number; i += p)
-        {
-            numbers[i] = false;
-        }
-    }
-}
-
-long int end_number = 15234567;
+long int end_number = 12345627;
 
 void EratosthenosWorker::run() {
-
+    QFile::remove("eratos.txt");
     unsigned long long p = 2;
     double per = 0.0;
     QString result = "";

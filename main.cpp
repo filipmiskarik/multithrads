@@ -8,7 +8,5 @@ int main(int argc, char *argv[])
     MainWindow w;
 
     w.show();
-    //w.operate(47000);
-    //w.operateEratos(100);
     return a.exec();
 }

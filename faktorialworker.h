@@ -24,7 +24,6 @@ signals:
 
 
 public slots:
-    QString* doFactorial(long int n);
     void pauseThread();
     void unPauseThread();
 

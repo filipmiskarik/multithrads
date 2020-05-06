@@ -9,26 +9,22 @@
 
 FaktorialWorker::FaktorialWorker()
 {
-    canRun = false;
+    canRun = true;
 }
 
 int FaktorialWorker::multiply(int x, int res[], int res_size)
 {
-    int carry = 0;  // Initialize carry
+    int carry = 0;
 
-    // One by one multiply n with individual digits of res[]
     for (int i=0; i<res_size; i++)
     {
         int prod = res[i] * x + carry;
 
-        // Store last digit of 'prod' in res[]
         res[i] = prod % 10;
 
-        // Put rest in carry
         carry  = prod/10;
     }
 
-    // Put carry in res and increase result size
     while (carry)
     {
         res[res_size] = carry%10;
@@ -38,53 +34,9 @@ int FaktorialWorker::multiply(int x, int res[], int res_size)
     return res_size;
 }
 
-QString* FaktorialWorker::doFactorial(long int n)
-{  
-
-    int res[MAX];
-    QString resultFinal = "";
-
-    // Initialize result
-    res[0] = 1;
-    int res_size = 1;
-    double per = 0.0;
-
-    for (int x=2; x <= n; x++)
-    {
-        res_size = multiply(x, res, res_size);
-        per = (double) x / (double) n * 100.0;
-        emit progressUp((int)per);
-    }
-
-    int pos = res_size - 1;
-    for(int j = (res_size - 1); j >= 0; j -= 100000)
-    {
-        resultFinal = "";
-        int lastpos = pos - 100000;
-        if(lastpos < 0)
-        {
-            lastpos = 0;
-        }
-        if(pos == res_size - 1)
-        {
-            lastpos++;
-        }
-        for (int i = pos; i >= lastpos; i--)
-        {
-            resultFinal += QString::number(res[i]);
-        }
-
-        pos -= 100000;
-        emit resultReady();
-    }
-}
-
 void FaktorialWorker::run() {
-
+    QFile::remove("fact.txt");
     int count = 0;
-
-    //if(canRun)
-    //{
 
     count ++;
     qDebug() << "FUNGUJU FACTORIAL!!!!";
@@ -95,7 +47,6 @@ void FaktorialWorker::run() {
     int res[MAX];
     QString resultFinal = "";
 
-    // Initialize result
     res[0] = 1;
     int res_size = 1;
 
@@ -111,10 +62,6 @@ void FaktorialWorker::run() {
             x++;
         }
     }
-
-
-
-
     int pos = res_size - 1;
 
     for(int j = (res_size - 1); j >= 0; j -= 10000)

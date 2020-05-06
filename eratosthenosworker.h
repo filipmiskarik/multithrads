@@ -9,18 +9,19 @@
 class EratosthenosWorker  : public QThread
 {
     Q_OBJECT
-//QThread eratosWorkerThread;
+
 public:
-     bool canRun;
-     EratosthenosWorker();
+    bool canRun;
+    EratosthenosWorker();
+
 protected:
-      void run();
+    void run();
+
 signals:
     void resultReady();
     void progressUp(int percentage);
 
 public slots:
-    QString* doEratosthenos(long int n);
     void pauseThread();
     void unPauseThread();
 };
