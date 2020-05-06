@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     //FAKTORIAL
-//    FaktorialWorker *worker = new FaktorialWorker;
+    //    FaktorialWorker *worker = new FaktorialWorker;
     //worker->moveToThread(&workerThread);
     qRegisterMetaType<long int>("long int");
     connect(&workerThread, &QThread::finished, worker, &QObject::deleteLater);
@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::factoriaResumeSignal, worker, &FaktorialWorker::unPauseThread);
 
     //ERATOS
-//    EratosthenosWorker *EratosWorker = new EratosthenosWorker;
+    //    EratosthenosWorker *EratosWorker = new EratosthenosWorker;
     //Eratosworker->moveToThread(&eratosWorkerThread);
     qRegisterMetaType<std::vector<unsigned long long>>("std::vector<unsigned long long>");
     connect(&eratosWorkerThread, &QThread::finished, EratosWorker, &QObject::deleteLater);
@@ -63,6 +63,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButtonFact, SIGNAL(released()), this, SLOT(openResultsFact()));
 
     ui->pushButtonEratos->setEnabled(false);
+    ui->pushButtonFact->setEnabled(false);
 
     worker->start();
     EratosWorker->start();
@@ -79,7 +80,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::handleResults()
 {
-
+    ui->pushButtonFact->setEnabled(true);
 }
 void::MainWindow::handleProgress(int percentage)
 {
@@ -105,7 +106,7 @@ void MainWindow::startEratostenos()
 
 void MainWindow::startFaktorial()
 {
-
+    ui->pushButtonFact->setEnabled(false);
     MainWindow::factoriaResumeSignal();
 }
 
