@@ -38,11 +38,11 @@ signals:
      void eratosResumeSignal(long long input);
 
 public slots:
-     void handleResults();
-     void handleProgress(int percentage);
+     void handleFactorialResults();
+     void handleFactorialProgress(int percentage);
      void startEratostenos();
      void startFaktorial();
-     void handleEratosResults();
+     void handleEratostenosResults();
      void handleEratosProgress(int percentage);
 
      void pauseFactorial();

@@ -160,10 +160,10 @@
    <widget class="QPushButton" name="pushButtonFact">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>380</y>
-      <width>241</width>
-      <height>141</height>
+      <x>70</x>
+      <y>350</y>
+      <width>251</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="text">

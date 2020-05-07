@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QUrl>
 #include <QIntValidator>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,15 +17,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     qRegisterMetaType<long int>("long int");
     connect(&workerThread, &QThread::finished, worker, &QObject::deleteLater);
-    connect(worker, &FaktorialWorker::resultReady, this, &MainWindow::handleResults);
-    connect(worker, &FaktorialWorker::progressUp, this, &MainWindow::handleProgress);
+    connect(worker, &FaktorialWorker::resultReady, this, &MainWindow::handleFactorialResults);
+    connect(worker, &FaktorialWorker::progressUp, this, &MainWindow::handleFactorialProgress);
 
     connect(this, &MainWindow::factoriaPauseSignal, worker, &FaktorialWorker::pauseThread);
     connect(this, &MainWindow::factoriaResumeSignal, worker, &FaktorialWorker::unPauseThread);
 
     qRegisterMetaType<std::vector<unsigned long long>>("std::vector<unsigned long long>");
     connect(&eratosWorkerThread, &QThread::finished, EratosWorker, &QObject::deleteLater);
-    connect(EratosWorker, &EratosthenosWorker::resultReady, this, &MainWindow::handleEratosResults);
+    connect(EratosWorker, &EratosthenosWorker::resultReady, this, &MainWindow::handleEratostenosResults);
     connect(EratosWorker, &EratosthenosWorker::progressUp, this, &MainWindow::handleEratosProgress);
 
     connect(this, &MainWindow::eratosPauseSignal, EratosWorker, &EratosthenosWorker::pauseThread);
@@ -67,20 +68,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::handleResults()
+void MainWindow::handleFactorialResults()
 {
     ui->pushButtonFact->setEnabled(true);
-//    ui->faktorialProgresBar->setValue(100);
+    ui->lineEditFact->setEnabled(true);
 }
-void::MainWindow::handleProgress(int percentage)
+void::MainWindow::handleFactorialProgress(int percentage)
 {
     ui->faktorialProgresBar->setValue(percentage);
 }
 
-void MainWindow::handleEratosResults()
+void MainWindow::handleEratostenosResults()
 {
     ui->pushButtonEratos->setEnabled(true);
-//    ui->EratosProgresBar->setValue(100);
+    ui->lineEditEratos->setEnabled(true);
 }
 
 void::MainWindow::handleEratosProgress(int percentage)
@@ -92,6 +93,7 @@ void MainWindow::startEratostenos()
 {
     QString input = ui->lineEditEratos->text();
     ui->pushButtonEratos->setEnabled(false);
+    ui->lineEditEratos->setEnabled(false);
     ui->EratosProgresBar->setValue(0);
     EratosWorker->start();
     MainWindow::eratosResumeSignal(input.toLongLong());
@@ -101,6 +103,7 @@ void MainWindow::startFaktorial()
 {
     QString input = ui->lineEditFact->text();
     ui->pushButtonFact->setEnabled(false);
+    ui->lineEditFact->setEnabled(false);
     ui->faktorialProgresBar->setValue(0);
     worker->start();
 
@@ -135,6 +138,7 @@ void MainWindow::stopFact()
     {
         worker->terminate();
     }
+    ui->lineEditFact->setEnabled(true);
 
     sTimer = new QTimer();
     sTimer->setSingleShot(true);
@@ -153,6 +157,7 @@ void MainWindow::stopEratos()
     sTimer->setSingleShot(true);
     connect(sTimer, SIGNAL(timeout()), SLOT(resetProgressBarEratos()));
     sTimer->start(1);
+    ui->lineEditEratos->setEnabled(true);
 }
 
 void MainWindow::openResultsEratos()
