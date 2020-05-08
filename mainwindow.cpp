@@ -95,7 +95,11 @@ void MainWindow::startEratostenos()
     ui->pushButtonEratos->setEnabled(false);
     ui->lineEditEratos->setEnabled(false);
     ui->EratosProgresBar->setValue(0);
-    EratosWorker->start();
+    if(!EratosWorker->isRunning())
+    {
+        EratosWorker->start();
+    }
+
     MainWindow::eratosResumeSignal(input.toLongLong());
 }
 
@@ -148,9 +152,11 @@ void MainWindow::stopFact()
 
 void MainWindow::stopEratos()
 {
-    if(EratosWorker->isRunning())
+    EratosWorker->canRun = false;
+    if(!EratosWorker->wait(200))
     {
-         EratosWorker->terminate();
+      EratosWorker->terminate();
+      EratosWorker->wait();
     }
 
     sTimer = new QTimer();
