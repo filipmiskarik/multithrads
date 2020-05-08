@@ -24,12 +24,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::factoriaResumeSignal, worker, &FaktorialWorker::unPauseThread);
 
     qRegisterMetaType<std::vector<unsigned long long>>("std::vector<unsigned long long>");
-    connect(&eratosWorkerThread, &QThread::finished, EratosWorker, &QObject::deleteLater);
-    connect(EratosWorker, &EratosthenosWorker::resultReady, this, &MainWindow::handleEratostenosResults);
-    connect(EratosWorker, &EratosthenosWorker::progressUp, this, &MainWindow::handleEratosProgress);
+    connect(&EratostenosWorkerThread, &QThread::finished, EratostenosWorker, &QObject::deleteLater);
+    connect(EratostenosWorker, &EratosthenosWorker::resultReady, this, &MainWindow::handleEratostenosResults);
+    connect(EratostenosWorker, &EratosthenosWorker::progressUp, this, &MainWindow::handleEratosProgress);
 
-    connect(this, &MainWindow::eratosPauseSignal, EratosWorker, &EratosthenosWorker::pauseThread);
-    connect(this, &MainWindow::eratosResumeSignal, EratosWorker, &EratosthenosWorker::unPauseThread);
+    connect(this, &MainWindow::eratosPauseSignal, EratostenosWorker, &EratosthenosWorker::pauseThread);
+    connect(this, &MainWindow::eratosResumeSignal, EratostenosWorker, &EratosthenosWorker::unPauseThread);
 
     ui->setupUi(this);
     ui->faktorialProgresBar->setRange(0,100);
@@ -37,17 +37,16 @@ MainWindow::MainWindow(QWidget *parent)
     ui->EratosProgresBar->setValue(0);
     ui->faktorialProgresBar->setValue(0);
 
-    //BUTTONY NA UI
     connect(ui->eratosButton, SIGNAL(released()), this, SLOT(startEratostenos()));
-    connect(ui->faktorialButton, SIGNAL(released()), this, SLOT(startFaktorial()));
+    connect(ui->faktorialButton, SIGNAL(released()), this, SLOT(startFactorial()));
 
     connect(ui->unpauseThread_Factorial, SIGNAL(released()), this, SLOT(resumeFactorial()));
     connect(ui->pauseThread_Factorial, SIGNAL(released()), this, SLOT(pauseFactorial()));
 
-    connect(ui->unpauseThread_Eratos, SIGNAL(released()), this, SLOT(resumeEratos()));
-    connect(ui->pauseThread_Eratos, SIGNAL(released()), this, SLOT(pauseEratos()));
+    connect(ui->unpauseThread_Eratos, SIGNAL(released()), this, SLOT(resumeEratostenos()));
+    connect(ui->pauseThread_Eratos, SIGNAL(released()), this, SLOT(pauseEratostenos()));
 
-    connect(ui->stopThread_Factorial, SIGNAL(released()), this, SLOT(stopFact()));
+    connect(ui->stopThread_Factorial, SIGNAL(released()), this, SLOT(stopFactorial()));
     connect(ui->stopThread_Eratos, SIGNAL(released()), this, SLOT(stopEratostenos()));
 
     connect(ui->pushButtonEratos, SIGNAL(released()), this, SLOT(openResultsEratostenos()));
@@ -63,8 +62,8 @@ MainWindow::~MainWindow()
 {
     workerThread.quit();
     workerThread.wait();
-    eratosWorkerThread.quit();
-    eratosWorkerThread.wait();
+    EratostenosWorkerThread.quit();
+    EratostenosWorkerThread.wait();
     delete ui;
 }
 
@@ -95,15 +94,15 @@ void MainWindow::startEratostenos()
     ui->pushButtonEratos->setEnabled(false);
     ui->lineEditEratos->setEnabled(false);
     ui->EratosProgresBar->setValue(0);
-    if(!EratosWorker->isRunning())
+    if(!EratostenosWorker->isRunning())
     {
-        EratosWorker->start();
+        EratostenosWorker->start();
     }
 
     MainWindow::eratosResumeSignal(input.toLongLong());
 }
 
-void MainWindow::startFaktorial()
+void MainWindow::startFactorial()
 {
     QString input = ui->lineEditFact->text();
     ui->pushButtonFact->setEnabled(false);
@@ -125,18 +124,18 @@ void MainWindow::resumeFactorial()
     MainWindow::factoriaResumeSignal(input.toLongLong());
 }
 
-void MainWindow::pauseEratos()
+void MainWindow::pauseEratostenos()
 {
     MainWindow::eratosPauseSignal();
 }
 
-void MainWindow::resumeEratos()
+void MainWindow::resumeEratostenos()
 {
     QString input = ui->lineEditEratos->text();
     MainWindow::eratosResumeSignal(input.toLongLong());
 }
 
-void MainWindow::stopFact()
+void MainWindow::stopFactorial()
 {
     if(worker->isRunning())
     {
@@ -152,11 +151,11 @@ void MainWindow::stopFact()
 
 void MainWindow::stopEratostenos()
 {
-    EratosWorker->canRun = false;
-    if(!EratosWorker->wait(200))
+    EratostenosWorker->canRun = false;
+    if(!EratostenosWorker->wait(200))
     {
-      EratosWorker->terminate();
-      EratosWorker->wait();
+      EratostenosWorker->terminate();
+      EratostenosWorker->wait();
     }
 
     sTimer = new QTimer();
@@ -170,6 +169,7 @@ void MainWindow::openResultsEratostenos()
 {
     QDesktopServices::openUrl(QUrl("eratos.txt", QUrl::TolerantMode));
 }
+
 void MainWindow::openResultsFactorial()
 {
     QDesktopServices::openUrl(QUrl("fact.txt", QUrl::TolerantMode));

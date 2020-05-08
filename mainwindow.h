@@ -16,9 +16,9 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
     QThread workerThread;
-    QThread eratosWorkerThread;
+    QThread EratostenosWorkerThread;
     FaktorialWorker *worker = new FaktorialWorker;
-    EratosthenosWorker *EratosWorker = new EratosthenosWorker;
+    EratosthenosWorker *EratostenosWorker = new EratosthenosWorker;
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -41,17 +41,17 @@ public slots:
      void handleFactorialResults();
      void handleFactorialProgress(int percentage);
      void startEratostenos();
-     void startFaktorial();
+     void startFactorial();
      void handleEratostenosResults();
      void handleEratosProgress(int percentage);
 
      void pauseFactorial();
      void resumeFactorial();
 
-     void pauseEratos();
-     void resumeEratos();
+     void pauseEratostenos();
+     void resumeEratostenos();
 
-     void stopFact();
+     void stopFactorial();
      void stopEratostenos();
 
      void openResultsEratostenos();

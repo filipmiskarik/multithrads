@@ -7,6 +7,8 @@
 
 #define MAX 400000
 
+long long n;
+
 FaktorialWorker::FaktorialWorker()
 {
     canRun = true;
@@ -27,14 +29,12 @@ int FaktorialWorker::multiply(int x, int res[], int res_size)
 
     while (carry)
     {
-        res[res_size] = carry%10;
+        res[res_size] = carry % 10;
         carry = carry/10;
         res_size++;
     }
     return res_size;
 }
-
-long int n = 54000;
 
 void FaktorialWorker::run() {
     QFile::remove("fact.txt");
@@ -55,8 +55,8 @@ void FaktorialWorker::run() {
         if(canRun)
         {
             res_size = multiply(x, res, res_size);
-            per = (double) x / (double) n * 100.0;
-            emit progressUp((int)per);
+            per = static_cast<double> (x) / static_cast<double> (n) * 100.0;
+            emit progressUp(static_cast<int>(per));
             x++;
         }
     }

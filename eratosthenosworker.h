@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QThread>
 
-
+extern long long end_number;
 
 class EratosthenosWorker  : public QThread
 {

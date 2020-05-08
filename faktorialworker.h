@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QThread>
 
-
+extern long long n;
 
 class FaktorialWorker : public QThread
 {
     Q_OBJECT
+
 
 public:
     int multiply(int x, int res[], int res_size);

@@ -9,12 +9,12 @@ EratosthenosWorker::EratosthenosWorker()
     canRun = true;
 }
 
-long int end_number = 12345627;
+long long end_number;
 
 void EratosthenosWorker::run()
 {
     QFile::remove("eratos.txt");
-    unsigned long long p = 2;
+    long long p = 2;
     double per = 0.0;
     QString result = "";
     std::vector<bool> numbers (end_number + 1, true);
@@ -23,7 +23,7 @@ void EratosthenosWorker::run()
     {
         if(canRun)
         {
-            per = (double) p / (double) end_number * 100;
+            per = static_cast<double>(p) / static_cast<double>(end_number) * 100;
             emit progressUp(qRound(per));
 
             if (!numbers[p])
