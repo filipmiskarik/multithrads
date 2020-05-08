@@ -52,14 +52,14 @@ public slots:
      void resumeEratos();
 
      void stopFact();
-     void stopEratos();
+     void stopEratostenos();
 
-     void openResultsEratos();
-     void openResultsFact();
+     void openResultsEratostenos();
+     void openResultsFactorial();
 
 private slots:
-     void resetProgressBarEratos();
-     void resetProgressBarFact();
+     void resetEratostenosProgressBar();
+     void resetFactorialProgressBar();
 
 };
 #endif // MAINWINDOW_H

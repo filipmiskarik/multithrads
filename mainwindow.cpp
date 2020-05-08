@@ -48,10 +48,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pauseThread_Eratos, SIGNAL(released()), this, SLOT(pauseEratos()));
 
     connect(ui->stopThread_Factorial, SIGNAL(released()), this, SLOT(stopFact()));
-    connect(ui->stopThread_Eratos, SIGNAL(released()), this, SLOT(stopEratos()));
+    connect(ui->stopThread_Eratos, SIGNAL(released()), this, SLOT(stopEratostenos()));
 
-    connect(ui->pushButtonEratos, SIGNAL(released()), this, SLOT(openResultsEratos()));
-    connect(ui->pushButtonFact, SIGNAL(released()), this, SLOT(openResultsFact()));
+    connect(ui->pushButtonEratos, SIGNAL(released()), this, SLOT(openResultsEratostenos()));
+    connect(ui->pushButtonFact, SIGNAL(released()), this, SLOT(openResultsFactorial()));
 
     ui->pushButtonEratos->setEnabled(false);
     ui->pushButtonFact->setEnabled(false);
@@ -146,11 +146,11 @@ void MainWindow::stopFact()
 
     sTimer = new QTimer();
     sTimer->setSingleShot(true);
-    connect(sTimer, SIGNAL(timeout()), SLOT(resetProgressBarFact()));
+    connect(sTimer, SIGNAL(timeout()), SLOT(resetFactorialProgressBar()));
     sTimer->start(1);
 }
 
-void MainWindow::stopEratos()
+void MainWindow::stopEratostenos()
 {
     EratosWorker->canRun = false;
     if(!EratosWorker->wait(200))
@@ -161,26 +161,26 @@ void MainWindow::stopEratos()
 
     sTimer = new QTimer();
     sTimer->setSingleShot(true);
-    connect(sTimer, SIGNAL(timeout()), SLOT(resetProgressBarEratos()));
+    connect(sTimer, SIGNAL(timeout()), SLOT(resetEratostenosProgressBar()));
     sTimer->start(1);
     ui->lineEditEratos->setEnabled(true);
 }
 
-void MainWindow::openResultsEratos()
+void MainWindow::openResultsEratostenos()
 {
     QDesktopServices::openUrl(QUrl("eratos.txt", QUrl::TolerantMode));
 }
-void MainWindow::openResultsFact()
+void MainWindow::openResultsFactorial()
 {
     QDesktopServices::openUrl(QUrl("fact.txt", QUrl::TolerantMode));
 }
 
-void MainWindow::resetProgressBarEratos()
+void MainWindow::resetEratostenosProgressBar()
 {
     ui->EratosProgresBar->setValue(0);
 }
 
-void MainWindow::resetProgressBarFact()
+void MainWindow::resetFactorialProgressBar()
 {
     ui->faktorialProgresBar->setValue(0);
 }
