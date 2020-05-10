@@ -25,6 +25,11 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="0" column="1">
        <widget class="QGroupBox" name="groupBox_2">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="title">
          <string>Sieve of Eratostenos counter</string>
         </property>
@@ -32,57 +37,67 @@
          <item>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="1" column="1">
-            <widget class="QPushButton" name="pauseThread_Eratos">
+            <widget class="QPushButton" name="pauseEratostenosButton">
              <property name="text">
               <string>PAUSE</string>
              </property>
             </widget>
            </item>
            <item row="1" column="2">
-            <widget class="QPushButton" name="unpauseThread_Eratos">
+            <widget class="QPushButton" name="unpauseEratostenosButton">
              <property name="text">
               <string>UNPAUSE</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1" colspan="2">
-            <widget class="QPushButton" name="eratosButton">
+            <widget class="QPushButton" name="startEratostenosButton">
              <property name="text">
               <string>START</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="3">
-            <widget class="QLineEdit" name="lineEditEratos">
+            <widget class="QLineEdit" name="eratostenosLineEdit">
              <property name="font">
               <font>
                <pointsize>14</pointsize>
               </font>
              </property>
+             <property name="placeholderText">
+              <string>Enter end number</string>
+             </property>
             </widget>
            </item>
            <item row="2" column="1" colspan="2">
-            <widget class="QPushButton" name="stopThread_Eratos">
+            <widget class="QPushButton" name="stopEratostenosButton">
              <property name="text">
               <string>STOP</string>
              </property>
             </widget>
            </item>
            <item row="6" column="0" rowspan="2" colspan="3">
-            <widget class="QPushButton" name="pushButtonEratos">
+            <widget class="QPushButton" name="resultsEratostenosButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
              <property name="text">
-              <string>Otevri vysledek</string>
+              <string>OPEN SIEVE OF ERATOSTENOS BUTTON</string>
              </property>
             </widget>
            </item>
            <item row="3" column="0" colspan="3">
-            <widget class="QProgressBar" name="EratosProgresBar">
+            <widget class="QProgressBar" name="eratostenosProgressBar">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                <horstretch>0</horstretch>
@@ -113,6 +128,11 @@
           <height>0</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="title">
          <string>Factorial counter</string>
         </property>
@@ -120,44 +140,47 @@
          <item>
           <layout class="QGridLayout" name="gridLayout_4">
            <item row="2" column="1" colspan="2">
-            <widget class="QPushButton" name="stopThread_Factorial">
+            <widget class="QPushButton" name="stopFactorialButton">
              <property name="text">
               <string>STOP</string>
              </property>
             </widget>
            </item>
            <item row="1" column="2">
-            <widget class="QPushButton" name="unpauseThread_Factorial">
+            <widget class="QPushButton" name="unpauseFactorialButton">
              <property name="text">
               <string>UNPAUSE</string>
              </property>
             </widget>
            </item>
            <item row="0" column="0" rowspan="3">
-            <widget class="QLineEdit" name="lineEditFact">
+            <widget class="QLineEdit" name="factorialLineEdit">
              <property name="font">
               <font>
                <pointsize>14</pointsize>
               </font>
              </property>
+             <property name="placeholderText">
+              <string>Enter number</string>
+             </property>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QPushButton" name="pauseThread_Factorial">
+            <widget class="QPushButton" name="pauseFactorialButton">
              <property name="text">
               <string>PAUSE</string>
              </property>
             </widget>
            </item>
            <item row="0" column="1" colspan="2">
-            <widget class="QPushButton" name="faktorialButton">
+            <widget class="QPushButton" name="startFactorialButton">
              <property name="text">
               <string>START</string>
              </property>
             </widget>
            </item>
            <item row="3" column="0" colspan="3">
-            <widget class="QProgressBar" name="faktorialProgresBar">
+            <widget class="QProgressBar" name="factorialProgressBar">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                <horstretch>0</horstretch>
@@ -170,15 +193,22 @@
             </widget>
            </item>
            <item row="10" column="0" rowspan="2" colspan="3">
-            <widget class="QPushButton" name="pushButtonFact">
+            <widget class="QPushButton" name="resultsFactorialButton">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+               <italic>false</italic>
+               <strikeout>false</strikeout>
+              </font>
+             </property>
              <property name="text">
-              <string>Otevri vysledky</string>
+              <string>OPEN FACTORIAL BUTTON</string>
              </property>
             </widget>
            </item>
