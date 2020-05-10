@@ -92,7 +92,7 @@
               </font>
              </property>
              <property name="text">
-              <string>OPEN SIEVE OF ERATOSTENOS BUTTON</string>
+              <string>OPEN SIEVE OF ERATOSTENOS RESULTS</string>
              </property>
             </widget>
            </item>
@@ -208,7 +208,7 @@
               </font>
              </property>
              <property name="text">
-              <string>OPEN FACTORIAL BUTTON</string>
+              <string>OPEN FACTORIAL RESULTS</string>
              </property>
             </widget>
            </item>
