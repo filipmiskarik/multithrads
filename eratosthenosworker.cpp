@@ -40,7 +40,7 @@ void EratosthenosWorker::run()
                 continue;
             }
 
-            for (unsigned long long i = p * p; i <= end_number; i += p)
+            for (long long i = p * p; i <= end_number; i += p)
             {
                 numbers[i] = false;
             }
