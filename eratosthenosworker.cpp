@@ -13,7 +13,7 @@ long long end_number;
 
 void EratosthenosWorker::run()
 {
-    QFile::remove("eratos.txt");
+    QFile::remove("EratostenosResults.txt");
     long long p = 2;
     double per = 0.0;
     QString result = "";
@@ -23,14 +23,14 @@ void EratosthenosWorker::run()
     {
         if(canRun)
         {
-            per = static_cast<double>(p) / static_cast<double>(end_number) * 100;
-            emit progressUp(qRound(per));
-
             if (!numbers[p])
             {
                 p++;
                 continue;
             }
+
+            per = static_cast<double>(p) / static_cast<double>(end_number) * 100;
+            emit progressUp(qRound(per));
 
             result += QString::number(p) + ", ";
 
@@ -49,7 +49,7 @@ void EratosthenosWorker::run()
         }
     }
 
-    const QString qPath("eratos.txt");
+    const QString qPath("EratostenosResults.txt");
     QFile qFile(qPath);
     if (qFile.open(QIODevice::WriteOnly))
     {

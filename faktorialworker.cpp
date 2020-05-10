@@ -37,7 +37,7 @@ int FaktorialWorker::multiply(int x, int res[], int res_size)
 }
 
 void FaktorialWorker::run() {
-    QFile::remove("fact.txt");
+    QFile::remove("FactorialResults.txt");
     int count = 0;
 
     count ++;
@@ -66,7 +66,7 @@ void FaktorialWorker::run() {
         resultFinal += QString::number(res[i]);
     }
 
-    const QString qPath("fact.txt");
+    const QString qPath("FactorialResults.txt");
     QFile qFile(qPath);
     if (qFile.open(QIODevice::WriteOnly))
     {

@@ -58,7 +58,7 @@ public slots:
      void openResultsFactorial();
 
 private slots:
-     void resetEratostenosProgressBar();
+     void reseteratostenosProgressBar();
      void resetFactorialProgressBar();
 
 };

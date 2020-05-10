@@ -32,30 +32,30 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::eratosResumeSignal, EratostenosWorker, &EratosthenosWorker::unPauseThread);
 
     ui->setupUi(this);
-    ui->faktorialProgresBar->setRange(0,100);
-    ui->EratosProgresBar->setRange(0,100);
-    ui->EratosProgresBar->setValue(0);
-    ui->faktorialProgresBar->setValue(0);
+    ui->factorialProgressBar->setRange(0,100);
+    ui->eratostenosProgressBar->setRange(0,100);
+    ui->eratostenosProgressBar->setValue(0);
+    ui->factorialProgressBar->setValue(0);
 
-    connect(ui->eratosButton, SIGNAL(released()), this, SLOT(startEratostenos()));
-    connect(ui->faktorialButton, SIGNAL(released()), this, SLOT(startFactorial()));
+    connect(ui->startEratostenosButton, SIGNAL(released()), this, SLOT(startEratostenos()));
+    connect(ui->startFactorialButton, SIGNAL(released()), this, SLOT(startFactorial()));
 
-    connect(ui->unpauseThread_Factorial, SIGNAL(released()), this, SLOT(resumeFactorial()));
-    connect(ui->pauseThread_Factorial, SIGNAL(released()), this, SLOT(pauseFactorial()));
+    connect(ui->unpauseFactorialButton, SIGNAL(released()), this, SLOT(resumeFactorial()));
+    connect(ui->pauseFactorialButton, SIGNAL(released()), this, SLOT(pauseFactorial()));
 
-    connect(ui->unpauseThread_Eratos, SIGNAL(released()), this, SLOT(resumeEratostenos()));
-    connect(ui->pauseThread_Eratos, SIGNAL(released()), this, SLOT(pauseEratostenos()));
+    connect(ui->unpauseEratostenosButton, SIGNAL(released()), this, SLOT(resumeEratostenos()));
+    connect(ui->pauseEratostenosButton, SIGNAL(released()), this, SLOT(pauseEratostenos()));
 
-    connect(ui->stopThread_Factorial, SIGNAL(released()), this, SLOT(stopFactorial()));
-    connect(ui->stopThread_Eratos, SIGNAL(released()), this, SLOT(stopEratostenos()));
+    connect(ui->stopFactorialButton, SIGNAL(released()), this, SLOT(stopFactorial()));
+    connect(ui->stopEratostenosButton, SIGNAL(released()), this, SLOT(stopEratostenos()));
 
-    connect(ui->pushButtonEratos, SIGNAL(released()), this, SLOT(openResultsEratostenos()));
-    connect(ui->pushButtonFact, SIGNAL(released()), this, SLOT(openResultsFactorial()));
+    connect(ui->resultsFactorialButton, SIGNAL(released()), this, SLOT(openResultsFactorial()));
+    connect(ui->resultsEratostenosButton, SIGNAL(released()), this, SLOT(openResultsEratostenos()));
 
-    ui->pushButtonEratos->setEnabled(false);
-    ui->pushButtonFact->setEnabled(false);
-    ui->lineEditFact->setValidator(new QIntValidator);
-    ui->lineEditEratos->setValidator(new QIntValidator);
+    ui->resultsEratostenosButton->setEnabled(false);
+    ui->resultsFactorialButton->setEnabled(false);
+    ui->factorialLineEdit->setValidator(new QIntValidator);
+    ui->eratostenosLineEdit->setValidator(new QIntValidator);
 }
 
 MainWindow::~MainWindow()
@@ -69,31 +69,31 @@ MainWindow::~MainWindow()
 
 void MainWindow::handleFactorialResults()
 {
-    ui->pushButtonFact->setEnabled(true);
-    ui->lineEditFact->setEnabled(true);
+    ui->resultsFactorialButton->setEnabled(true);
+    ui->factorialLineEdit->setEnabled(true);
 }
 void::MainWindow::handleFactorialProgress(int percentage)
 {
-    ui->faktorialProgresBar->setValue(percentage);
+    ui->factorialProgressBar->setValue(percentage);
 }
 
 void MainWindow::handleEratostenosResults()
 {
-    ui->pushButtonEratos->setEnabled(true);
-    ui->lineEditEratos->setEnabled(true);
+    ui->resultsEratostenosButton->setEnabled(true);
+    ui->eratostenosLineEdit->setEnabled(true);
 }
 
 void::MainWindow::handleEratosProgress(int percentage)
 {
-    ui->EratosProgresBar->setValue(percentage);
+    ui->eratostenosProgressBar->setValue(percentage);
 }
 
 void MainWindow::startEratostenos()
 {
-    QString input = ui->lineEditEratos->text();
-    ui->pushButtonEratos->setEnabled(false);
-    ui->lineEditEratos->setEnabled(false);
-    ui->EratosProgresBar->setValue(0);
+    QString input = ui->eratostenosLineEdit->text();
+    ui->resultsEratostenosButton->setEnabled(false);
+    ui->eratostenosLineEdit->setEnabled(false);
+    ui->eratostenosProgressBar->setValue(0);
     if(!EratostenosWorker->isRunning())
     {
         EratostenosWorker->start();
@@ -104,10 +104,10 @@ void MainWindow::startEratostenos()
 
 void MainWindow::startFactorial()
 {
-    QString input = ui->lineEditFact->text();
-    ui->pushButtonFact->setEnabled(false);
-    ui->lineEditFact->setEnabled(false);
-    ui->faktorialProgresBar->setValue(0);
+    QString input = ui->factorialLineEdit->text();
+    ui->resultsFactorialButton->setEnabled(false);
+    ui->factorialLineEdit->setEnabled(false);
+    ui->factorialProgressBar->setValue(0);
     worker->start();
 
     MainWindow::factoriaResumeSignal(input.toLongLong());
@@ -120,7 +120,7 @@ void MainWindow::pauseFactorial()
 
 void MainWindow::resumeFactorial()
 {
-    QString input = ui->lineEditFact->text();
+    QString input = ui->factorialLineEdit->text();
     MainWindow::factoriaResumeSignal(input.toLongLong());
 }
 
@@ -131,7 +131,7 @@ void MainWindow::pauseEratostenos()
 
 void MainWindow::resumeEratostenos()
 {
-    QString input = ui->lineEditEratos->text();
+    QString input = ui->eratostenosLineEdit->text();
     MainWindow::eratosResumeSignal(input.toLongLong());
 }
 
@@ -141,7 +141,7 @@ void MainWindow::stopFactorial()
     {
         worker->terminate();
     }
-    ui->lineEditFact->setEnabled(true);
+    ui->factorialLineEdit->setEnabled(true);
 
     sTimer = new QTimer();
     sTimer->setSingleShot(true);
@@ -160,29 +160,29 @@ void MainWindow::stopEratostenos()
 
     sTimer = new QTimer();
     sTimer->setSingleShot(true);
-    connect(sTimer, SIGNAL(timeout()), SLOT(resetEratostenosProgressBar()));
+    connect(sTimer, SIGNAL(timeout()), SLOT(reseteratostenosProgressBar()));
     sTimer->start(1);
-    ui->lineEditEratos->setEnabled(true);
+    ui->eratostenosLineEdit->setEnabled(true);
 }
 
 void MainWindow::openResultsEratostenos()
 {
-    QDesktopServices::openUrl(QUrl("eratos.txt", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("EratostenosResults.txt", QUrl::TolerantMode));
 }
 
 void MainWindow::openResultsFactorial()
 {
-    QDesktopServices::openUrl(QUrl("fact.txt", QUrl::TolerantMode));
+    QDesktopServices::openUrl(QUrl("FactorialResults.txt", QUrl::TolerantMode));
 }
 
-void MainWindow::resetEratostenosProgressBar()
+void MainWindow::reseteratostenosProgressBar()
 {
-    ui->EratosProgresBar->setValue(0);
+    ui->eratostenosProgressBar->setValue(0);
 }
 
 void MainWindow::resetFactorialProgressBar()
 {
-    ui->faktorialProgresBar->setValue(0);
+    ui->factorialProgressBar->setValue(0);
 }
 
 
