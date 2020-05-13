@@ -23,9 +23,6 @@ void EratosthenosWorker::run()
     {
         if(canRun)
         {
-            per = (double) p / (double) end_number * 100;
-            emit progressUp(qRound(per));
-
             if (!numbers[p])
             {
                 p++;
@@ -33,6 +30,9 @@ void EratosthenosWorker::run()
             }
 
             result += QString::number(p) + ", ";
+
+            per = (double) p / (double) end_number * 100;
+            emit progressUp(qRound(per));
 
             if (p * p >= end_number)
             {
